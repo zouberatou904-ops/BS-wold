@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BS Wold — Le monde du business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.kkiapay.me/k.js"></script>
+<style>
+  :root{
+    --navy:#12123B;
+    --navy-2:#1B1B4F;
+    --amber:#FFB627;
+    --coral:#FF6B4A;
+    --emerald:#00C896;
+    --paper:#FAF9F6;
+    --ink:#17172E;
+    --ink-soft:#5B5B7A;
+    --line:#E7E5F0;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+  }
+  .app{
+    width:100%;
+    max-width:480px;
+    min-height:100vh;
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  h1,h2,h3,.brand{font-family:'Sora',sans-serif;}
+
+  /* HEADER */
+  header{
+    background:var(--navy);
+    background-image:radial-gradient(circle at 90% -10%, rgba(255,182,39,0.35), transparent 55%);
+    color:#fff;
+    padding:18px 20px 22px;
+    border-radius:0 0 26px 26px;
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:0.2px;}
+  .brand .mark{
+    width:32px;height:32px;border-radius:9px;
+    background:linear-gradient(135deg,var(--amber),var(--coral));
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:800;color:var(--navy);
+  }
+  .icon-btn{
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;
+  }
+  .tag{
+    display:inline-block;margin-top:14px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.18);
+    color:var(--amber);
+    font-size:11px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;
+    padding:5px 11px;border-radius:100px;
+  }
+  header h1{
+    margin:10px 0 4px;
+    font-size:24px;line-height:1.25;font-weight:700;
+  }
+  header p{margin:0;color:rgba(255,255,255,0.65);font-size:13.5px;}
+  .search{
+    margin-top:16px;
+    background:#fff;
+    border-radius:100px;
+    padding:12px 16px;
+    display:flex;align-items:center;gap:9px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.18);
+  }
+  .search input{
+    border:none;outline:none;flex:1;font-size:14px;font-family:'Inter',sans-serif;color:var(--ink);background:transparent;
+  }
+  .search .go{font-size:16px;color:var(--ink-soft);}
+
+  main{flex:1;padding:20px 20px 100px;}
+  section{margin-bottom:26px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+  .section-head h2{font-size:16px;margin:0;font-weight:700;}
+  .section-head a{font-size:12.5px;color:var(--coral);text-decoration:none;font-weight:600;}
+
+  /* CATEGORIES */
+  .chips{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:0 0 auto;
+    padding:9px 15px;border-radius:100px;
+    font-size:12.5px;font-weight:600;
+    background:#fff;border:1px solid var(--line);color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+  /* PROMO STRIP */
+  .promo{
+    display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;
+  }
+  .promo::-webkit-scrollbar{display:none;}
+  .promo-card{
+    flex:0 0 auto;width:210px;height:112px;border-radius:var(--radius);
+    padding:14px;color:#fff;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  .promo-card.p1{background:linear-gradient(135deg,var(--coral),#FF9A3D);}
+  .promo-card.p2{background:linear-gradient(135deg,var(--navy-2),#3A3A8C);}
+  .promo-card .pct{position:absolute;top:12px;right:14px;font-size:26px;font-weight:800;font-family:'Sora',sans-serif;opacity:0.9;}
+  .promo-card .lbl{font-size:13px;font-weight:700;font-family:'Sora',sans-serif;}
+  .promo-card .sub{font-size:11px;opacity:0.8;margin-top:2px;}
+
+  /* PRODUCT GRID */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  .card{
+    background:#fff;border-radius:var(--radius);border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .thumb{
+    height:108px;display:flex;align-items:center;justify-content:center;
+    font-size:34px;
+  }
+  .card-body{padding:11px 12px 13px;}
+  .card-body .name{font-size:13px;font-weight:600;line-height:1.3;margin:0 0 4px;}
+  .card-body .seller{font-size:11px;color:var(--ink-soft);margin:0 0 8px;}
+  .price-row{display:flex;align-items:center;justify-content:space-between;}
+  .price{font-size:14.5px;font-weight:800;color:var(--navy);font-family:'Sora',sans-serif;}
+  .add-btn{
+    width:28px;height:28px;border-radius:9px;border:none;
+    background:var(--navy);color:#fff;font-size:16px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* MONEY STRIP */
+  .money-strip{
+    display:flex;align-items:center;gap:12px;
+    background:linear-gradient(135deg,#0E3B34,#0A5C4C);
+    color:#fff;border-radius:var(--radius);padding:15px 16px;
+  }
+  .money-strip .ic{font-size:22px;}
+  .money-strip .t{font-size:13px;font-weight:700;font-family:'Sora',sans-serif;}
+  .money-strip .s{font-size:11.5px;color:rgba(255,255,255,0.75);margin-top:1px;}
+
+  /* BOTTOM NAV */
+  nav.bottom{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:480px;
+    background:#fff;border-top:1px solid var(--line);
+    display:flex;justify-content:space-around;
+    padding:10px 6px 14px;
+    box-shadow:0 -8px 24px rgba(20,20,60,0.06);
+  }
+  .nav-btn{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    background:none;border:none;color:var(--ink-soft);font-size:10px;font-weight:600;
+    font-family:'Inter',sans-serif;
+  }
+  .nav-btn .dot{width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .nav-btn.active{color:var(--navy);}
+  .nav-btn.active .dot{background:var(--amber);border-radius:8px;}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .empty{
+    text-align:center;padding:60px 20px;color:var(--ink-soft);
+  }
+  .empty .big{font-size:40px;margin-bottom:10px;}
+  .empty h3{font-family:'Sora',sans-serif;color:var(--ink);margin:0 0 6px;font-size:16px;}
+  .empty p{font-size:13px;margin:0;}
+
+  .badge-cart{
+    position:absolute;top:-6px;right:-6px;background:var(--coral);color:#fff;
+    font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* FORMULAIRES */
+  .tabs2{display:flex;gap:8px;margin-bottom:14px;}
+  .tab2{
+    flex:1;padding:10px;border-radius:12px;text-align:center;
+    font-size:12.5px;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--ink-soft);
+  }
+  .tab2.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:11.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;}
+  .field input, .field select{
+    width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--line);
+    font-size:14px;font-family:'Inter',sans-serif;color:var(--ink);background:#fff;
+  }
+  .btn-main{
+    width:100%;padding:13px;border-radius:12px;border:none;
+    background:var(--navy);color:#fff;font-weight:700;font-size:13.5px;
+  }
+  .msg{
+    margin-top:10px;padding:12px;border-radius:12px;font-size:12.5px;line-height:1.5;
+  }
+  .msg.ok{background:#E4F9F1;color:#03694A;border:1px solid #A8E9CE;}
+  .msg.err{background:#FDECEA;color:#B3261E;border:1px solid #F5C2BE;}
+  .code-box{
+    text-align:center;padding:16px;background:var(--navy);border-radius:14px;margin-top:10px;
+  }
+  .code-box .lbl{color:rgba(255,255,255,0.6);font-size:11px;margin-bottom:6px;}
+  .code-box .val{color:var(--amber);font-size:22px;font-weight:800;font-family:'Sora',sans-serif;letter-spacing:2px;}
+  .profile-card{
+    background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;
+    border-radius:var(--radius);padding:16px;margin-bottom:16px;
+  }
+  .profile-card .name{font-family:'Sora',sans-serif;font-weight:700;font-size:16px;margin:0;}
+  .profile-card .role{font-size:11.5px;color:var(--amber);margin-top:2px;}
+  .btn-ghost{
+    width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);font-weight:700;font-size:12.5px;margin-top:8px;
+  }
+
+  /* PANIER */
+  .cart-row{
+    display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:10px 12px;margin-bottom:10px;
+  }
+  .cart-row .ic{width:42px;height:42px;border-radius:10px;background:#F1F0FA;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .cart-row .info{flex:1;min-width:0;}
+  .cart-row .info .n{font-size:13px;font-weight:600;margin:0 0 2px;}
+  .cart-row .info .p{font-size:12.5px;color:var(--ink-soft);margin:0;}
+  .cart-row .qty{display:flex;align-items:center;gap:8px;}
+  .cart-row .qty button{width:24px;height:24px;border-radius:7px;border:1px solid var(--line);background:#fff;font-weight:700;}
+  .cart-row .qty span{font-size:13px;font-weight:700;min-width:14px;text-align:center;}
+  .cart-total{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 4px;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;
+  }
+
+  /* MESSAGERIE */
+  .chat-btn{
+    width:28px;height:28px;border-radius:9px;border:1px solid var(--line);
+    background:#fff;color:var(--navy);font-size:13px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .conv-row{
+    display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);
+    border-radius:14px;padding:12px;margin-bottom:9px;
+  }
+  .conv-row .av{
+    width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;
+    font-family:'Sora',sans-serif;flex-shrink:0;
+  }
+  .conv-row .info{flex:1;min-width:0;}
+  .conv-row .info .n{font-size:13.5px;font-weight:700;margin:0 0 2px;}
+  .conv-row .info .p{font-size:11.5px;color:var(--ink-soft);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .thread-header{
+    display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  }
+  .thread-header button{
+    width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:15px;
+  }
+  .thread-header .tn{font-family:'Sora',sans-serif;font-weight:700;font-size:14px;margin:0;}
+  .thread-header .tp{font-size:11px;color:var(--ink-soft);margin:0;}
+  .bubbles{display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow-y:auto;padding:4px 2px 10px;}
+  .bubble{
+    max-width:75%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.4;
+  }
+  .bubble.moi{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px;}
+  .bubble.autre{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;}
+  .msg-input-row{display:flex;gap:8px;margin-top:10px;}
+  .msg-input-row input{
+    flex:1;padding:11px 13px;border-radius:100px;border:1px solid var(--line);font-size:13.5px;font-family:'Inter',sans-serif;
+  }
+  .msg-input-row button{
+    width:42px;height:42px;border-radius:50%;border:none;background:var(--navy);color:#fff;font-size:15px;flex-shrink:0;
+  }
+
+  /* MES PRODUITS */
+  .mp-row{
+    display:flex;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;
+  }
+  .mp-row .thumb-sm{
+    width:56px;height:56px;border-radius:10px;background:#F1F0FA;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:22px;
+    background-size:cover;background-position:center;
+  }
+  .mp-row .mp-info{flex:1;min-width:0;}
+  .mp-row .mp-info .n{font-size:13px;font-weight:700;margin:0 0 6px;}
+  .mp-row .mp-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .mp-row .mp-actions label{
+    font-size:11px;font-weight:700;color:var(--navy);border:1px solid var(--line);
+    border-radius:9px;padding:6px 10px;cursor:pointer;
+  }
+  .mp-row .mp-actions input[type=file]{display:none;}
+  .mp-row .mp-actions button{
+    font-size:11px;font-weight:700;color:#B3261E;border:1px solid #F5C2BE;background:#FDECEA;
+    border-radius:9px;padding:6px 10px;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header>
+    <div class="topbar">
+      <div class="brand"><span class="mark">₣</span> BS Wold</div>
+      <div class="icon-btn">🔔</div>
+    </div>
+    <span class="tag">Marketplace • Bénin</span>
+    <h1>Achetez et vendez,<br>partout au Bénin.</h1>
+    <p>Marchands vérifiés · Paiement Mobile Money</p>
+    <div class="search">
+      <span>🔍</span>
+      <input type="text" placeholder="Rechercher un produit, un marchand...">
+    </div>
+  </header>
+
+  <main>
+
+    <!-- VUE ACCUEIL -->
+    <div id="view-accueil" class="view active">
+      <section>
+        <div class="chips">
+          <div class="chip active">Tout</div>
+          <div class="chip">Mode</div>
+          <div class="chip">Électronique</div>
+          <div class="chip">Maison</div>
+          <div class="chip">Alimentation</div>
+          <div class="chip">Beauté</div>
+        </div>
+      </section>
+
+      <section>
+        <div class="promo">
+          <div class="promo-card p1">
+            <span class="pct">-20%</span>
+            <span class="lbl">Nouveaux marchands</span>
+            <span class="sub">Frais réduits ce mois-ci</span>
+          </div>
+          <div class="promo-card p2">
+            <span class="pct">🚀</span>
+            <span class="lbl">Livraison Cotonou</span>
+            <span class="sub">Sous 24h dans la ville</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="money-strip">
+          <div class="ic">📲</div>
+          <div>
+            <div class="t">Paiement Mobile Money</div>
+            <div class="s">Payez et vendez en toute sécurité</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head"><h2>Populaires près de vous</h2><a href="#">Voir tout</a></div>
+        <div class="grid" id="product-grid"></div>
+      </section>
+    </div>
+
+    <!-- VUE CATEGORIES -->
+    <div id="view-categories" class="view">
+      <section>
+        <div class="section-head"><h2>Toutes les catégories</h2></div>
+        <div class="grid" id="category-grid"></div>
+      </section>
+    </div>
+
+    <!-- VUE MESSAGERIE -->
+    <div id="view-messagerie" class="view">
+      <div id="msg-liste">
+        <div class="section-head"><h2>Messagerie</h2></div>
+        <div id="msg-liste-contenu"></div>
+      </div>
+      <div id="msg-thread" style="display:none;">
+        <div class="thread-header">
+          <button onclick="fermerConversation()">←</button>
+          <div>
+            <p class="tn" id="thread-nom">—</p>
+            <p class="tp" id="thread-produit">—</p>
+          </div>
+        </div>
+        <div class="bubbles" id="thread-bulles"></div>
+        <div class="msg-input-row">
+          <input type="text" id="msg-input" placeholder="Écrire un message...">
+          <button onclick="envoyerMessage()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VUE PANIER -->
+    <div id="view-panier" class="view">
+      <section>
+        <div class="section-head"><h2>Mon panier</h2></div>
+        <div id="panier-contenu"></div>
+      </section>
+    </div>
+
+    <!-- VUE COMPTE -->
+    <div id="view-compte" class="view">
+
+      <!-- Non connecté : inscription / connexion -->
+      <div id="compte-auth">
+        <section>
+          <div class="section-head"><h2>Mon compte</h2></div>
+          <div class="tabs2">
+            <div class="tab2 active" id="tab-inscription" onclick="switchTab('inscription')">S'inscrire</div>
+            <div class="tab2" id="tab-connexion" onclick="switchTab('connexion')">Se connecter</div>
+          </div>
+
+          <!-- Formulaire inscription -->
+          <div id="form-inscription" class="card" style="padding:16px;">
+            <div class="field">
+              <label>Nom complet</label>
+              <input type="text" id="insc-nom" placeholder="Ex: Rosine Dossou">
+            </div>
+            <div class="field">
+              <label>Numéro de téléphone</label>
+              <input type="tel" id="insc-tel" placeholder="Ex: 97 00 00 00">
+            </div>
+            <div class="field">
+              <label>Je suis</label>
+              <select id="insc-role">
+                <option value="client">Client — j'achète des produits</option>
+                <option value="marchand">Marchand — je vends des produits</option>
+              </select>
+            </div>
+            <button class="btn-main" onclick="inscrire()">Créer mon compte</button>
+            <div id="insc-resultat"></div>
+          </div>
+
+          <!-- Formulaire connexion -->
+          <div id="form-connexion" class="card" style="padding:16px;display:none;">
+            <div class="field">
+              <label>Votre code personnel</label>
+              <input type="text" id="conn-code" placeholder="Ex: A3F9K2">
+            </div>
+            <button class="btn-main" onclick="connecter()">Se connecter</button>
+            <div id="conn-resultat"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Connecté -->
+      <div id="compte-connecte" style="display:none;">
+        <section>
+          <div class="profile-card">
+            <p class="name" id="prof-nom">—</p>
+            <p class="role" id="prof-role">—</p>
+          </div>
+        </section>
+
+        <!-- Configuration paiement + commission (marchands uniquement) -->
+        <section id="section-paiement-marchand" style="display:none;">
+          <div class="section-head"><h2>Mon paiement</h2></div>
+          <div class="card" style="padding:16px;">
+            <div class="field">
+              <label>Ma clé publique Kkiapay (pour recevoir mes paiements)</label>
+              <input type="text" id="marchand-kkiapay" placeholder="Ex: pk_live_xxxxxxxx">
+            </div>
+            <button class="btn-ghost" onclick="enregistrerCleKkiapay()">Enregistrer ma clé</button>
+            <div id="kkiapay-resultat"></div>
+          </div>
+          <div class="card" style="padding:16px;margin-top:10px;" id="commission-card">
+            <p style="margin:0 0 6px;font-size:12px;color:var(--ink-soft);">Commission due (5% de tes ventes)</p>
+            <p style="margin:0 0 12px;font-size:22px;font-weight:800;font-family:'Sora',sans-serif;color:var(--navy);" id="commission-montant">0 F</p>
+            <button class="btn-main" onclick="payerCommission()">Payer ma commission maintenant</button>
+            <div id="commission-resultat"></div>
+          </div>
+        </section>
+
+        <!-- Formulaire ajout produit (marchands uniquement) -->
+        <section id="section-ajout-produit" style="display:none;">
+          <div class="section-head"><h2>Ajouter un produit</h2></div>
+          <div class="card" style="padding:16px;">
+            <div class="field">
+              <label>Nom du produit</label>
+              <input type="text" id="prod-nom" placeholder="Ex: Sac à main cuir">
+            </div>
+            <div class="field">
+              <label>Prix (FCFA)</label>
+              <input type="number" id="prod-prix" placeholder="Ex: 15000">
+            </div>
+            <div class="field">
+              <label>Catégorie</label>
+              <select id="prod-categorie">
+                <option>Mode & Vêtements</option>
+                <option>Électronique</option>
+                <option>Maison & Déco</option>
+                <option>Alimentation</option>
+                <option>Beauté & Soins</option>
+                <option>Enfants & Jouets</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Photo du produit</label>
+              <input type="file" id="prod-photo" accept="image/*">
+            </div>
+            <button class="btn-main" onclick="publierProduit()">Publier le produit</button>
+            <div id="prod-resultat"></div>
+          </div>
+        </section>
+
+        <!-- Mes produits (gestion des photos) -->
+        <section id="section-mes-produits" style="display:none;">
+          <div class="section-head"><h2>Mes produits</h2></div>
+          <div id="mes-produits-liste"></div>
+        </section>
+
+        <section>
+          <button class="btn-ghost" onclick="deconnecter()">Se déconnecter</button>
+        </section>
+      </div>
+
+    </div>
+
+  </main>
+
+  <nav class="bottom">
+    <button class="nav-btn active" data-view="accueil"><span class="dot">🏠</span>Accueil</button>
+    <button class="nav-btn" data-view="categories"><span class="dot">🗂️</span>Catégories</button>
+    <button class="nav-btn" data-view="messagerie"><span class="dot">💬</span>Messagerie</button>
+    <button class="nav-btn" data-view="panier"><span class="dot">🛒</span>Panier</button>
+    <button class="nav-btn" data-view="compte"><span class="dot">👤</span>Compte</button>
+  </nav>
+
+</div>
+
+<script>
+  // ---------- CONNEXION BASE DE DONNÉES / AFFICHAGE PRODUITS ----------
+  const SUPABASE_URL = 'https://xvdqxwuvdaubgmehszfd.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_z7c710Bzfp8443anmAOJiw_WRLuuSI_';
+
+  // ⚠️ Remplace cette valeur par ta vraie clé Kkiapay (TON compte à toi, pour les commissions)
+  const KKIAPAY_KEY = 'REMPLACE_PAR_TA_CLE_KKIAPAY';
+  const KKIAPAY_SANDBOX = true; // passera à false quand la vraie clé sera en place
+  const SEUIL_BLOCAGE = 5000; // au-delà de cette commission due (en F), le marchand est bloqué
+  const TAUX_COMMISSION = 0.05; // 5%
+
+  function formatPrix(n){
+    return Number(n).toLocaleString('fr-FR') + ' F';
+  }
+
+  const grid = document.getElementById('product-grid');
+  let produitsCharges = [];
+
+  async function chargerProduits(){
+    try{
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/produits?select=*&order=created_at.desc`, {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        }
+      });
+      const produits = await res.json();
+      produitsCharges = produits || [];
+
+      if(!produits || produits.length === 0){
+        grid.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:30px 10px;color:var(--ink-soft);">
+            <div style="font-size:32px;margin-bottom:8px;">📦</div>
+            <p style="font-size:13px;margin:0;">Aucun produit pour l'instant.<br>Les marchands n'ont pas encore publié.</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = '';
+      produits.forEach(p=>{
+        grid.innerHTML += `
+          <div class="card">
+            <div class="thumb" style="background:#F1F0FA;${p.image_url ? `background-image:url('${p.image_url}');background-size:cover;background-position:center;` : ''}">${p.image_url ? '' : '🛍️'}</div>
+            <div class="card-body">
+              <p class="name">${p.nom}</p>
+              <p class="seller">${p.categorie || 'BS Wold'}</p>
+              <div class="price-row">
+                <span class="price">${formatPrix(p.prix)}</span>
+                <div style="display:flex;gap:6px;">
+                  <button class="chat-btn" onclick="ouvrirConversation('${p.id}','${p.marchand_id||''}')">💬</button>
+                  <button class="add-btn" onclick="ajouterAuPanier('${p.id}')">+</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      });
+    }catch(err){
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--ink-soft);font-size:13px;">Impossible de charger les produits pour le moment.</div>`;
+    }
+  }
+  chargerProduits();
+
+  const categories = [
+    {emoji:'👗', name:'Mode & Vêtements'},
+    {emoji:'📱', name:'Électronique'},
+    {emoji:'🏠', name:'Maison & Déco'},
+    {emoji:'🍲', name:'Alimentation'},
+    {emoji:'💄', name:'Beauté & Soins'},
+    {emoji:'🧸', name:'Enfants & Jouets'},
+  ];
+
+  const catGrid = document.getElementById('category-grid');
+  categories.forEach(c=>{
+    catGrid.innerHTML += `
+      <div class="card" style="padding:18px 14px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:8px;">${c.emoji}</div>
+        <p class="name" style="margin:0;">${c.name}</p>
+      </div>`;
+  });
+
+  // Navigation entre les onglets
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('view-'+btn.dataset.view).classList.add('active');
+      if(btn.dataset.view === 'panier') afficherPanier();
+    });
+  });
+
+  // ---------- PANIER ----------
+
+  function getPanier(){
+    return JSON.parse(localStorage.getItem('bswold_panier') || '[]');
+  }
+  function setPanier(panier){
+    localStorage.setItem('bswold_panier', JSON.stringify(panier));
+    majBadgePanier();
+  }
+  function majBadgePanier(){
+    const total = getPanier().reduce((s,i)=>s+i.quantite,0);
+    const btn = document.querySelector('.nav-btn[data-view="panier"] .dot');
+    let badge = btn.querySelector('.badge-cart');
+    if(total > 0){
+      if(!badge){
+        badge = document.createElement('span');
+        badge.className = 'badge-cart';
+        btn.style.position = 'relative';
+        btn.appendChild(badge);
+      }
+      badge.textContent = total;
+    }else if(badge){
+      badge.remove();
+    }
+  }
+
+  function ajouterAuPanier(produitId){
+    const produit = produitsCharges.find(p=>p.id===produitId);
+    if(!produit) return;
+    const panier = getPanier();
+    const existant = panier.find(i=>i.produit_id===produitId);
+    if(existant){ existant.quantite++; }
+    else{ panier.push({produit_id:produitId, nom:produit.nom, prix:produit.prix, quantite:1, marchand_id:produit.marchand_id}); }
+    setPanier(panier);
+  }
+
+  function changerQuantite(produitId, delta){
+    let panier = getPanier();
+    const item = panier.find(i=>i.produit_id===produitId);
+    if(!item) return;
+    item.quantite += delta;
+    if(item.quantite <= 0) panier = panier.filter(i=>i.produit_id!==produitId);
+    setPanier(panier);
+    afficherPanier();
+  }
+
+  function afficherPanier(){
+    const panier = getPanier();
+    const zone = document.getElementById('panier-contenu');
+    if(panier.length === 0){
+      zone.innerHTML = `
+        <div class="empty">
+          <div class="big">🛒</div>
+          <h3>Votre panier est vide</h3>
+          <p>Ajoutez des produits depuis<br>l'accueil pour commencer.</p>
+        </div>`;
+      return;
+    }
+    const total = panier.reduce((s,i)=>s+i.prix*i.quantite,0);
+    let html = '';
+    panier.forEach(i=>{
+      html += `
+        <div class="cart-row">
+          <div class="ic">🛍️</div>
+          <div class="info">
+            <p class="n">${i.nom}</p>
+            <p class="p">${formatPrix(i.prix)}</p>
+          </div>
+          <div class="qty">
+            <button onclick="changerQuantite('${i.produit_id}',-1)">−</button>
+            <span>${i.quantite}</span>
+            <button onclick="changerQuantite('${i.produit_id}',1)">+</button>
+          </div>
+        </div>`;
+    });
+    html += `
+      <div class="cart-total"><span>Total</span><span>${formatPrix(total)}</span></div>
+      <button class="btn-main" onclick="lancerCommande()">Commander et payer</button>
+      <div id="commande-resultat"></div>
+    `;
+    zone.innerHTML = html;
+  }
+
+  async function supaFetch(path, options={}){
+    return fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      ...options,
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation',
+        ...(options.headers||{})
+      }
+    });
+  }
+
+  async function lancerCommande(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    const resDiv = document.getElementById('commande-resultat');
+    if(!profil){
+      resDiv.innerHTML = `<div class="msg err">Connecte-toi d'abord dans l'onglet "Compte" pour commander.</div>`;
+      return;
+    }
+    if(typeof openKkiapayWidget !== 'function'){
+      resDiv.innerHTML = `<div class="msg err">Le paiement n'a pas pu se charger. Vérifie ta connexion internet et réessaie.</div>`;
+      return;
+    }
+    const panier = getPanier();
+    if(panier.length===0) return;
+
+    const marchandsDifferents = new Set(panier.map(i=>i.marchand_id));
+    if(marchandsDifferents.size > 1){
+      resDiv.innerHTML = `<div class="msg err">Ton panier contient des produits de plusieurs marchands différents. Pour l'instant, commande un marchand à la fois.</div>`;
+      return;
+    }
+
+    const marchandId = panier[0].marchand_id;
+    const res = await supaFetch(`profils?id=eq.${marchandId}&select=*`);
+    const data = await res.json();
+    const marchand = data && data[0];
+
+    if(!marchand || !marchand.kkiapay_cle){
+      resDiv.innerHTML = `<div class="msg err">Ce marchand n'a pas encore configuré son moyen de paiement.</div>`;
+      return;
+    }
+    if(marchand.bloque){
+      resDiv.innerHTML = `<div class="msg err">Ce marchand ne peut pas encore vendre pour le moment. Réessaie plus tard.</div>`;
+      return;
+    }
+
+    const total = panier.reduce((s,i)=>s+i.prix*i.quantite,0);
+
+    openKkiapayWidget({
+      amount: total,
+      key: marchand.kkiapay_cle,
+      sandbox: KKIAPAY_SANDBOX,
+      phone: profil.telephone || '',
+      data: JSON.stringify({profil_id: profil.id, marchand_id: marchandId})
+    });
+  }
+
+  async function traiterPaiementReussi(response){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    const panier = getPanier();
+    if(!profil || panier.length===0) return;
+
+    try{
+      const marchandId = panier[0].marchand_id;
+      const total = panier.reduce((s,i)=>s+i.prix*i.quantite,0);
+
+      for(const item of panier){
+        await supaFetch('commandes', {
+          method:'POST',
+          body: JSON.stringify({
+            client_id: profil.id,
+            produit_id: item.produit_id,
+            quantite: item.quantite,
+            statut: 'payee'
+          })
+        });
+      }
+
+      // Calcul et mise à jour de la commission due par le marchand
+      const res = await supaFetch(`profils?id=eq.${marchandId}&select=*`);
+      const data = await res.json();
+      const marchand = data && data[0];
+      if(marchand){
+        const nouvelleCommission = Number(marchand.commission_due || 0) + total * TAUX_COMMISSION;
+        await supaFetch(`profils?id=eq.${marchandId}`, {
+          method:'PATCH',
+          body: JSON.stringify({
+            commission_due: nouvelleCommission,
+            bloque: nouvelleCommission >= SEUIL_BLOCAGE
+          })
+        });
+      }
+
+      setPanier([]);
+      afficherPanier();
+      document.getElementById('panier-contenu').insertAdjacentHTML('afterbegin',
+        `<div class="msg ok">Paiement reçu, commande enregistrée ! Le marchand va préparer ta commande.</div>`);
+    }catch(err){
+      document.getElementById('panier-contenu').insertAdjacentHTML('afterbegin',
+        `<div class="msg err">Paiement reçu mais erreur d'enregistrement. Contacte le support.</div>`);
+    }
+  }
+
+  if(typeof addSuccessListener === 'function'){
+    addSuccessListener(traiterPaiementReussi);
+  }
+
+  majBadgePanier();
+
+  // ---------- MESSAGERIE ----------
+
+  let currentConv = null; // {produit_id, marchand_id, client_id, produit_nom}
+  let pollingMsg = null;
+
+  function requireProfil(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(!profil){
+      alert("Connecte-toi d'abord dans l'onglet Compte pour discuter avec un marchand.");
+      return null;
+    }
+    return profil;
+  }
+
+  async function ouvrirConversation(produitId, marchandId){
+    const profil = requireProfil();
+    if(!profil) return;
+    if(!marchandId){
+      alert("Ce marchand n'est pas encore identifié pour ce produit.");
+      return;
+    }
+    if(profil.id === marchandId){
+      alert("C'est ton propre produit.");
+      return;
+    }
+    const produit = produitsCharges.find(p=>p.id===produitId);
+    ouvrirFilDiscussion({
+      produit_id: produitId,
+      marchand_id: marchandId,
+      client_id: profil.id,
+      produit_nom: produit ? produit.nom : '',
+    });
+  }
+
+  async function ouvrirConversationExistante(produitId, marchandId, clientId, produitNom){
+    const profil = requireProfil();
+    if(!profil) return;
+    if(profil.id !== marchandId && profil.id !== clientId){
+      alert("Cette conversation ne t'appartient pas.");
+      return;
+    }
+    ouvrirFilDiscussion({
+      produit_id: produitId,
+      marchand_id: marchandId,
+      client_id: clientId,
+      produit_nom: produitNom || '',
+    });
+  }
+
+  async function ouvrirFilDiscussion(conv){
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.querySelector('.nav-btn[data-view="messagerie"]').classList.add('active');
+    document.getElementById('view-messagerie').classList.add('active');
+
+    currentConv = conv;
+
+    document.getElementById('msg-liste').style.display = 'none';
+    document.getElementById('msg-thread').style.display = 'block';
+    document.getElementById('thread-nom').textContent = 'Marchand';
+    document.getElementById('thread-produit').textContent = currentConv.produit_nom;
+
+    await chargerMessages();
+    if(pollingMsg) clearInterval(pollingMsg);
+    pollingMsg = setInterval(chargerMessages, 4000);
+  }
+
+  function fermerConversation(){
+    currentConv = null;
+    if(pollingMsg){ clearInterval(pollingMsg); pollingMsg = null; }
+    document.getElementById('msg-thread').style.display = 'none';
+    document.getElementById('msg-liste').style.display = 'block';
+    chargerConversations();
+  }
+
+  async function chargerMessages(){
+    if(!currentConv) return;
+    const {produit_id, marchand_id, client_id} = currentConv;
+    const res = await supaFetch(`messages?produit_id=eq.${produit_id}&marchand_id=eq.${marchand_id}&client_id=eq.${client_id}&order=created_at.asc`);
+    const messages = await res.json();
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    const zone = document.getElementById('thread-bulles');
+    if(!messages || messages.length===0){
+      zone.innerHTML = `<p style="text-align:center;color:var(--ink-soft);font-size:12.5px;padding:20px 0;">Aucun message encore. Dis bonjour !</p>`;
+      return;
+    }
+    zone.innerHTML = messages.map(m=>{
+      const moi = m.expediteur_id === profil.id;
+      return `<div class="bubble ${moi?'moi':'autre'}">${m.contenu}</div>`;
+    }).join('');
+    zone.scrollTop = zone.scrollHeight;
+  }
+
+  async function envoyerMessage(){
+    if(!currentConv) return;
+    const input = document.getElementById('msg-input');
+    const contenu = input.value.trim();
+    if(!contenu) return;
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    input.value = '';
+    await supaFetch('messages', {
+      method:'POST',
+      body: JSON.stringify({
+        produit_id: currentConv.produit_id,
+        marchand_id: currentConv.marchand_id,
+        client_id: currentConv.client_id,
+        expediteur_id: profil.id,
+        contenu
+      })
+    });
+    chargerMessages();
+  }
+
+  async function chargerConversations(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    const zone = document.getElementById('msg-liste-contenu');
+    if(!profil){
+      zone.innerHTML = `
+        <div class="empty">
+          <div class="big">💬</div>
+          <h3>Connecte-toi</h3>
+          <p>Va dans l'onglet Compte pour<br>voir tes conversations.</p>
+        </div>`;
+      return;
+    }
+    const res = await supaFetch(`messages?or=(client_id.eq.${profil.id},marchand_id.eq.${profil.id})&order=created_at.desc`);
+    const messages = await res.json();
+    if(!messages || messages.length===0){
+      zone.innerHTML = `
+        <div class="empty">
+          <div class="big">💬</div>
+          <h3>Aucune conversation</h3>
+          <p>Vos échanges avec les marchands<br>apparaîtront ici.</p>
+        </div>`;
+      return;
+    }
+    const vues = new Set();
+    let html = '';
+    messages.forEach(m=>{
+      const cle = `${m.produit_id}_${m.marchand_id}_${m.client_id}`;
+      if(vues.has(cle)) return;
+      vues.add(cle);
+      const produit = produitsCharges.find(p=>p.id===m.produit_id);
+      const nomProduit = produit ? produit.nom : 'Produit';
+      html += `
+        <div class="conv-row" onclick='ouvrirConversationExistante("${m.produit_id}","${m.marchand_id}","${m.client_id}","${nomProduit.replace(/'/g,"\\'")}")'>
+          <div class="av">💬</div>
+          <div class="info">
+            <p class="n">${nomProduit}</p>
+            <p class="p">${m.contenu}</p>
+          </div>
+        </div>`;
+    });
+    zone.innerHTML = html;
+  }
+
+  // Charger la liste de conversations quand on ouvre l'onglet Messagerie
+  document.querySelector('.nav-btn[data-view="messagerie"]').addEventListener('click', ()=>{
+    if(!currentConv){
+      document.getElementById('msg-liste').style.display = 'block';
+      document.getElementById('msg-thread').style.display = 'none';
+      chargerConversations();
+    }
+  });
+
+  // ---------- COMPTE : inscription / connexion / produits ----------
+
+  function switchTab(tab){
+    document.getElementById('tab-inscription').classList.toggle('active', tab==='inscription');
+    document.getElementById('tab-connexion').classList.toggle('active', tab==='connexion');
+    document.getElementById('form-inscription').style.display = tab==='inscription' ? 'block' : 'none';
+    document.getElementById('form-connexion').style.display = tab==='connexion' ? 'block' : 'none';
+  }
+
+  function genererCode(){
+    const car = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for(let i=0;i<6;i++) code += car[Math.floor(Math.random()*car.length)];
+    return code;
+  }
+
+  async function inscrire(){
+    const nom = document.getElementById('insc-nom').value.trim();
+    const tel = document.getElementById('insc-tel').value.trim();
+    const role = document.getElementById('insc-role').value;
+    const resDiv = document.getElementById('insc-resultat');
+
+    if(!nom || !tel){
+      resDiv.innerHTML = `<div class="msg err">Merci de remplir ton nom et ton numéro.</div>`;
+      return;
+    }
+
+    const code = genererCode();
+    try{
+      const res = await supaFetch('profils', {
+        method:'POST',
+        body: JSON.stringify({nom, telephone:tel, role, code})
+      });
+      if(!res.ok) throw new Error('insert');
+      const data = await res.json();
+      const profil = data[0];
+
+      resDiv.innerHTML = `
+        <div class="msg ok">Compte créé avec succès !</div>
+        <div class="code-box">
+          <div class="lbl">TON CODE PERSONNEL — GARDE-LE PRÉCIEUSEMENT</div>
+          <div class="val">${profil.code}</div>
+        </div>`;
+
+      localStorage.setItem('bswold_profil', JSON.stringify(profil));
+      setTimeout(()=>afficherProfilConnecte(profil), 1800);
+    }catch(err){
+      resDiv.innerHTML = `<div class="msg err">Une erreur est survenue. Réessaie.</div>`;
+    }
+  }
+
+  async function connecter(){
+    const code = document.getElementById('conn-code').value.trim().toUpperCase();
+    const resDiv = document.getElementById('conn-resultat');
+    if(!code){
+      resDiv.innerHTML = `<div class="msg err">Entre ton code personnel.</div>`;
+      return;
+    }
+    try{
+      const res = await supaFetch(`profils?code=eq.${code}&select=*`);
+      const data = await res.json();
+      if(!data || data.length===0){
+        resDiv.innerHTML = `<div class="msg err">Code introuvable. Vérifie et réessaie.</div>`;
+        return;
+      }
+      localStorage.setItem('bswold_profil', JSON.stringify(data[0]));
+      afficherProfilConnecte(data[0]);
+    }catch(err){
+      resDiv.innerHTML = `<div class="msg err">Une erreur est survenue. Réessaie.</div>`;
+    }
+  }
+
+  function afficherProfilConnecte(profil){
+    document.getElementById('compte-auth').style.display = 'none';
+    document.getElementById('compte-connecte').style.display = 'block';
+    document.getElementById('prof-nom').textContent = profil.nom;
+    document.getElementById('prof-role').textContent = profil.role === 'marchand' ? 'Compte marchand' : 'Compte client';
+    document.getElementById('section-ajout-produit').style.display = profil.role === 'marchand' ? 'block' : 'none';
+    document.getElementById('section-mes-produits').style.display = profil.role === 'marchand' ? 'block' : 'none';
+    document.getElementById('section-paiement-marchand').style.display = profil.role === 'marchand' ? 'block' : 'none';
+    if(profil.role === 'marchand'){
+      chargerMesProduits();
+      document.getElementById('marchand-kkiapay').value = profil.kkiapay_cle || '';
+      document.getElementById('commission-montant').textContent = formatPrix(profil.commission_due || 0);
+    }
+  }
+
+  function deconnecter(){
+    localStorage.removeItem('bswold_profil');
+    document.getElementById('compte-auth').style.display = 'block';
+    document.getElementById('compte-connecte').style.display = 'none';
+  }
+
+  function compresserImage(fichier, maxLargeur=800, qualite=0.7){
+    return new Promise((resolve)=>{
+      const img = new Image();
+      const lecteur = new FileReader();
+      lecteur.onload = (e)=>{
+        img.onload = ()=>{
+          const ratio = Math.min(1, maxLargeur / img.width);
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width * ratio;
+          canvas.height = img.height * ratio;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob((blob)=>{
+            resolve(new File([blob], fichier.name.replace(/\.[^.]+$/, '.jpg'), {type:'image/jpeg'}));
+          }, 'image/jpeg', qualite);
+        };
+        img.src = e.target.result;
+      };
+      lecteur.readAsDataURL(fichier);
+    });
+  }
+
+  async function publierProduit(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(!profil) return;
+    const nom = document.getElementById('prod-nom').value.trim();
+    const prix = document.getElementById('prod-prix').value;
+    const categorie = document.getElementById('prod-categorie').value;
+    const fichierPhoto = document.getElementById('prod-photo').files[0];
+    const resDiv = document.getElementById('prod-resultat');
+
+    if(!nom || !prix){
+      resDiv.innerHTML = `<div class="msg err">Remplis le nom et le prix du produit.</div>`;
+      return;
+    }
+
+    resDiv.innerHTML = `<div class="msg ok">Publication en cours...</div>`;
+
+    try{
+      let image_url = '';
+
+      if(fichierPhoto){
+        const photoCompressee = await compresserImage(fichierPhoto);
+        const nomFichier = `${profil.id}_${Date.now()}.jpg`;
+        const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/Image%20du%20produit/${nomFichier}`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'image/jpeg'
+          },
+          body: photoCompressee
+        });
+        if(uploadRes.ok){
+          image_url = `${SUPABASE_URL}/storage/v1/object/public/Image%20du%20produit/${nomFichier}`;
+        }
+      }
+
+      const res = await supaFetch('produits', {
+        method:'POST',
+        body: JSON.stringify({nom, prix:Number(prix), categorie, marchand_id: profil.id, image_url})
+      });
+      if(!res.ok) throw new Error('insert');
+      resDiv.innerHTML = `<div class="msg ok">Produit publié ! Il est maintenant visible sur l'accueil.</div>`;
+      document.getElementById('prod-nom').value='';
+      document.getElementById('prod-prix').value='';
+      document.getElementById('prod-photo').value='';
+      chargerProduits();
+      chargerMesProduits();
+    }catch(err){
+      resDiv.innerHTML = `<div class="msg err">Une erreur est survenue. Réessaie.</div>`;
+    }
+  }
+
+  async function chargerMesProduits(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(!profil) return;
+    const zone = document.getElementById('mes-produits-liste');
+    const res = await supaFetch(`produits?marchand_id=eq.${profil.id}&order=created_at.desc`);
+    const produits = await res.json();
+
+    if(!produits || produits.length===0){
+      zone.innerHTML = `<p style="font-size:12.5px;color:var(--ink-soft);">Tu n'as pas encore publié de produit.</p>`;
+      return;
+    }
+
+    zone.innerHTML = produits.map(p => `
+      <div class="mp-row">
+        <div class="thumb-sm" id="mp-thumb-${p.id}" style="${p.image_url ? `background-image:url('${p.image_url}')` : ''}">${p.image_url ? '' : '🛍️'}</div>
+        <div class="mp-info">
+          <p class="n" id="mp-nom-${p.id}">${p.nom} — ${formatPrix(p.prix)}</p>
+          <div class="mp-actions">
+            <label>Changer la photo
+              <input type="file" accept="image/*" onchange="changerPhotoProduit('${p.id}', this.files[0])">
+            </label>
+            ${p.image_url ? `<button onclick="enleverPhotoProduit('${p.id}')">Enlever la photo</button>` : ''}
+            <label onclick="basculerEdition('${p.id}')" style="cursor:pointer;">Modifier</label>
+          </div>
+          <div id="mp-edit-${p.id}" style="display:none;margin-top:10px;">
+            <div class="field"><label>Nom</label><input type="text" id="mp-edit-nom-${p.id}" value="${p.nom.replace(/"/g,'&quot;')}"></div>
+            <div class="field"><label>Prix (FCFA)</label><input type="number" id="mp-edit-prix-${p.id}" value="${p.prix}"></div>
+            <div class="field">
+              <label>Catégorie</label>
+              <select id="mp-edit-cat-${p.id}">
+                ${['Mode & Vêtements','Électronique','Maison & Déco','Alimentation','Beauté & Soins','Enfants & Jouets']
+                  .map(c=>`<option ${c===p.categorie?'selected':''}>${c}</option>`).join('')}
+              </select>
+            </div>
+            <button class="btn-main" onclick="enregistrerModifProduit('${p.id}')">Enregistrer les modifications</button>
+          </div>
+          <div id="mp-msg-${p.id}"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function basculerEdition(produitId){
+    const zone = document.getElementById(`mp-edit-${produitId}`);
+    zone.style.display = zone.style.display === 'none' ? 'block' : 'none';
+  }
+
+  async function enregistrerModifProduit(produitId){
+    const nom = document.getElementById(`mp-edit-nom-${produitId}`).value.trim();
+    const prix = document.getElementById(`mp-edit-prix-${produitId}`).value;
+    const categorie = document.getElementById(`mp-edit-cat-${produitId}`).value;
+    const msgDiv = document.getElementById(`mp-msg-${produitId}`);
+
+    if(!nom || !prix){
+      msgDiv.innerHTML = `<div class="msg err">Le nom et le prix sont obligatoires.</div>`;
+      return;
+    }
+
+    try{
+      await supaFetch(`produits?id=eq.${produitId}`, {
+        method:'PATCH',
+        body: JSON.stringify({nom, prix:Number(prix), categorie})
+      });
+      msgDiv.innerHTML = `<div class="msg ok">Produit mis à jour !</div>`;
+      chargerMesProduits();
+      chargerProduits();
+    }catch(err){
+      msgDiv.innerHTML = `<div class="msg err">Une erreur est survenue. Réessaie.</div>`;
+    }
+  }
+
+  async function changerPhotoProduit(produitId, fichier){
+    if(!fichier) return;
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    const msgDiv = document.getElementById(`mp-msg-${produitId}`);
+    msgDiv.innerHTML = `<div class="msg ok">Envoi en cours...</div>`;
+    try{
+      const photoCompressee = await compresserImage(fichier);
+      const nomFichier = `${profil.id}_${Date.now()}.jpg`;
+      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/Image%20du%20produit/${nomFichier}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'image/jpeg'
+        },
+        body: photoCompressee
+      });
+      if(!uploadRes.ok) throw new Error('upload');
+      const image_url = `${SUPABASE_URL}/storage/v1/object/public/Image%20du%20produit/${nomFichier}`;
+
+      await supaFetch(`produits?id=eq.${produitId}`, {
+        method:'PATCH',
+        body: JSON.stringify({image_url})
+      });
+
+      msgDiv.innerHTML = `<div class="msg ok">Photo mise à jour !</div>`;
+      chargerMesProduits();
+      chargerProduits();
+    }catch(err){
+      msgDiv.innerHTML = `<div class="msg err">Échec de l'envoi. Réessaie.</div>`;
+    }
+  }
+
+  async function enleverPhotoProduit(produitId){
+    const msgDiv = document.getElementById(`mp-msg-${produitId}`);
+    try{
+      await supaFetch(`produits?id=eq.${produitId}`, {
+        method:'PATCH',
+        body: JSON.stringify({image_url: ''})
+      });
+      chargerMesProduits();
+      chargerProduits();
+    }catch(err){
+      msgDiv.innerHTML = `<div class="msg err">Une erreur est survenue.</div>`;
+    }
+  }
+
+  // ---------- PAIEMENT MARCHAND & COMMISSION ----------
+
+  async function enregistrerCleKkiapay(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(!profil) return;
+    const cle = document.getElementById('marchand-kkiapay').value.trim();
+    const resDiv = document.getElementById('kkiapay-resultat');
+    if(!cle){
+      resDiv.innerHTML = `<div class="msg err">Entre ta clé Kkiapay.</div>`;
+      return;
+    }
+    try{
+      await supaFetch(`profils?id=eq.${profil.id}`, {
+        method:'PATCH',
+        body: JSON.stringify({kkiapay_cle: cle})
+      });
+      profil.kkiapay_cle = cle;
+      localStorage.setItem('bswold_profil', JSON.stringify(profil));
+      resDiv.innerHTML = `<div class="msg ok">Clé enregistrée ! Tu peux maintenant recevoir des paiements.</div>`;
+    }catch(err){
+      resDiv.innerHTML = `<div class="msg err">Une erreur est survenue. Réessaie.</div>`;
+    }
+  }
+
+  let ecouteurCommissionInstalle = false;
+
+  async function payerCommission(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(!profil) return;
+    const resDiv = document.getElementById('commission-resultat');
+    const montant = Number(profil.commission_due || 0);
+
+    if(montant <= 0){
+      resDiv.innerHTML = `<div class="msg ok">Aucune commission due pour l'instant.</div>`;
+      return;
+    }
+    if(typeof openKkiapayWidget !== 'function'){
+      resDiv.innerHTML = `<div class="msg err">Le paiement n'a pas pu se charger. Vérifie ta connexion internet.</div>`;
+      return;
+    }
+
+    openKkiapayWidget({
+      amount: montant,
+      key: KKIAPAY_KEY,
+      sandbox: KKIAPAY_SANDBOX,
+      phone: profil.telephone || '',
+      data: JSON.stringify({paiement_commission: profil.id})
+    });
+
+    if(!ecouteurCommissionInstalle && typeof addSuccessListener === 'function'){
+      ecouteurCommissionInstalle = true;
+      addSuccessListener(async ()=>{
+        const p = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+        if(!p) return;
+        try{
+          await supaFetch(`profils?id=eq.${p.id}`, {
+            method:'PATCH',
+            body: JSON.stringify({commission_due: 0, bloque: false})
+          });
+          p.commission_due = 0;
+          p.bloque = false;
+          localStorage.setItem('bswold_profil', JSON.stringify(p));
+          document.getElementById('commission-montant').textContent = formatPrix(0);
+          document.getElementById('commission-resultat').innerHTML = `<div class="msg ok">Commission payée, ton compte est à jour !</div>`;
+        }catch(err){
+          document.getElementById('commission-resultat').innerHTML = `<div class="msg err">Paiement reçu mais erreur de mise à jour. Contacte le support.</div>`;
+        }
+      });
+    }
+  }
+
+  // Reconnexion automatique si un profil est déjà enregistré sur ce téléphone
+  (function(){
+    const profil = JSON.parse(localStorage.getItem('bswold_profil')||'null');
+    if(profil) afficherProfilConnecte(profil);
+  })();
+</script>
+</body>
+</html>
