@@ -1,0 +1,44 @@
+const REFERRAL_REWARD = 0.4;
+
+async function init() {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const user = session.user;
+
+  const { data: profile } = await supabaseClient
+    .from("profiles")
+    .select("code_parrainage")
+    .eq("id", user.id)
+    .single();
+
+  const code = profile ? profile.code_parrainage : null;
+  const link = window.location.origin + window.location.pathname.replace("parrainage.html", "register.html") + "?ref=" + (code || "");
+
+  document.getElementById("linkText").textContent = code ? link.replace(/^https?:\/\//, "") : "Code indisponible";
+
+  const { data: count } = await supabaseClient.rpc("count_my_referrals");
+  const filleuls = count || 0;
+  document.getElementById("filleulsCount").textContent = filleuls;
+  document.getElementById("gainsTotal").textContent = (filleuls * REFERRAL_REWARD).toFixed(2);
+
+  const message = "Rejoins BS WOLD CASH et gagne de l'argent ! Inscris-toi avec mon lien : " + link;
+  document.getElementById("shareWa").href = "https://wa.me/?text=" + encodeURIComponent(message);
+  document.getElementById("shareFb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link);
+
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const label = document.getElementById("copyLabel");
+    try {
+      await navigator.clipboard.writeText(link);
+      label.textContent = "Copié ✓";
+    } catch (e) {
+      label.textContent = "Erreur";
+    }
+    setTimeout(() => { label.textContent = "Copier"; }, 2000);
+  });
+}
+
+init();
