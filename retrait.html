@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS WOLD CASH — Retrait</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="16" fill="#123330"/>
+        <path d="M18 40 L18 20 M18 20 L28 20 Q35 20 35 27 Q35 33 28 33 L20 33" stroke="#1FB6A8" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M38 40 L44 24 L50 40" stroke="#E8B95C" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-name">BS <span>WOLD</span> CASH</div>
+    </div>
+    <div class="icon-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9aa3a1" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+    </div>
+  </div>
+
+  <h1 class="ref-title">Retrait de vos gains</h1>
+  <p class="ref-sub">Retirez vos gains par Mobile Money</p>
+
+  <div class="wallet-card">
+    <div class="wallet-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1FB6A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15V9H5a2 2 0 01-2-2z"/><circle cx="16.5" cy="14.5" r="1"/></svg>
+    </div>
+    <div class="wallet-body">
+      <div class="balance-label">Solde disponible</div>
+      <div class="balance-amount" id="balanceK">0.00<span class="unit">K</span></div>
+      <div class="balance-fcfa" id="balanceFcfa">≈ 0 FCFA · Disponible maintenant</div>
+    </div>
+    <div class="active-pill"><i></i>Actif</div>
+  </div>
+
+  <div class="section-head">Méthode de retrait</div>
+  <div class="method-grid">
+    <div class="method-card selected" data-op="MTN">
+      <div class="method-logo mtn">MTN</div>
+      <div><div class="method-name">MTN MoMo</div><div class="method-type">Mobile Money</div></div>
+      <div class="method-check">✓</div>
+    </div>
+    <div class="method-card" data-op="Moov">
+      <div class="method-logo moov">M</div>
+      <div><div class="method-name">Moov Money</div><div class="method-type">Mobile Money</div></div>
+      <div class="method-check">✓</div>
+    </div>
+    <div class="method-card full" data-op="Celtiis">
+      <div class="method-logo celtiis">C</div>
+      <div><div class="method-name">Celtiis Cash</div><div class="method-type">Mobile Money</div></div>
+      <div class="method-check">✓</div>
+    </div>
+  </div>
+
+  <div class="section-head">Détails du retrait</div>
+  <form id="withdrawForm">
+    <div class="detail-label-row">
+      <label for="montant">Montant à retirer (K)</label>
+      <span class="max-link" id="maxLink">Max: 0.00 K</span>
+    </div>
+    <input type="number" id="montant" step="0.1" min="0.3" placeholder="0.3" required>
+
+    <label for="numero">Numéro Mobile Money</label>
+    <div class="field-icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1FB6A8" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+      <input type="tel" id="numero" placeholder="Ex: +229 01 23 45 67 89" required>
+    </div>
+
+    <div class="info-note">
+      <span>ℹ️</span>
+      <span>Minimum 0,3 K (300 FCFA) · 1 K = 1 000 FCFA · Ta demande est traitée par notre équipe</span>
+    </div>
+
+    <div id="formMsg" class="form-msg"></div>
+    <button type="submit" class="btn-primary" id="submitBtn">Retirer maintenant →</button>
+  </form>
+
+  <div class="section-head" style="margin-top:30px">Historique des retraits</div>
+  <div id="history"><div class="empty-history">Chargement...</div></div>
+
+  <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+      Accueil
+    </a>
+    <a href="sondages.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+      Gagner
+    </a>
+    <a href="parrainage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="7" r="2.5"/><path d="M22 20c0-2.8-2-5-5-5.3"/></svg>
+      Parrainage
+    </a>
+    <a href="retrait.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15V9H5a2 2 0 01-2-2z"/></svg>
+      Retrait
+    </a>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="retrait.js"></script>
+</body>
+</html>
