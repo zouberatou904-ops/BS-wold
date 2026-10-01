@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS WOLD CASH — Sondages</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <a href="dashboard.html" class="back-link">← Retour</a>
+  <h1 class="ref-title" style="text-align:left;margin-top:0">Sondages</h1>
+  <p class="subtitle">Réponds aux sondages et gagne de l'argent</p>
+
+  <div class="survey-frame-wrap" id="frameWrap">
+    <div class="survey-loading" id="loading" style="color:#666">Chargement des sondages...</div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">Mes sondages complétés</div>
+  <div id="history"><div class="empty-history">Chargement...</div></div>
+
+  <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+      Accueil
+    </a>
+    <a href="sondages.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+      Gagner
+    </a>
+    <a href="parrainage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="7" r="2.5"/><path d="M22 20c0-2.8-2-5-5-5.3"/></svg>
+      Parrainage
+    </a>
+    <a href="retrait.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h15V9H5a2 2 0 01-2-2z"/></svg>
+      Retrait
+    </a>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="sondages.js"></script>
+</body>
+</html>
