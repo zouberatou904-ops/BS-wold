@@ -53,7 +53,7 @@ function renderApproved() {
     '<div class="waiting-icon">✅</div>' +
     '<h2>Candidature acceptée</h2>' +
     '<p>Tu peux maintenant accéder à l\'affiliation Corbeau.</p>' +
-    '<a href="' + CORBEAU_URL + '" class="btn-primary" style="display:block;text-decoration:none;text-align:center;margin-top:16px">Accéder à Corbeau</a>' +
+    '<a href="corbeau-catalogue.html" class="btn-primary" style="display:block;text-decoration:none;text-align:center;margin-top:16px">Accéder à Corbeau</a>' +
     '</div>';
 }
 
