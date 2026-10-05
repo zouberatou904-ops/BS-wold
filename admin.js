@@ -35,43 +35,57 @@ async function init() {
     });
   });
 
-  loadCandidatures();
+  loadVendeurs();
   loadProduits();
   loadRetraits();
+  loadRetraitsFour();
+  loadLivraisons();
   loadVentesCorbeau();
 }
 
-// ---- Candidatures d'affiliation ----
-async function loadCandidatures() {
+// ---- Vendeurs (plafond + certification) ----
+async function loadVendeurs() {
   const box = document.getElementById("listCandidatures");
-  const { data, error } = await supabaseClient
-    .from("candidatures_affiliation")
-    .select("id, nom, prenom, age, est_eleve, type_piece, tuteur_whatsapp, statut, created_at")
-    .order("created_at", { ascending: false });
-
-  if (error || !data || data.length === 0) {
-    box.innerHTML = '<div class="empty-history">Aucune candidature</div>';
-    return;
-  }
-
-  box.innerHTML = data.map((c) => {
-    const d = new Date(c.created_at).toLocaleDateString("fr-FR");
-    const eleve = c.est_eleve ? "Élève" : "Non élève";
-    const tuteur = c.tuteur_whatsapp ? " · Tuteur : " + esc(c.tuteur_whatsapp) : "";
-    const actions = c.statut === "en_attente"
-      ? '<div class="admin-row"><button class="admin-btn-ok" onclick="setCandidature(\'' + c.id + '\',\'approuve\')">Approuver</button>' +
-        '<button class="admin-btn-no" onclick="setCandidature(\'' + c.id + '\',\'refuse\')">Refuser</button></div>'
-      : '<div class="status-banner ' + (c.statut === "approuve" ? "en_attente" : "refuse") + '" style="margin-top:8px">' + (c.statut === "approuve" ? "✅ Approuvée" : "❌ Refusée") + '</div>';
-    return '<div class="admin-card">' +
-      '<div class="admin-card-title">' + esc(c.prenom) + ' ' + esc(c.nom) + ' · ' + c.age + ' ans</div>' +
-      '<div class="admin-card-meta">' + eleve + ' · Pièce : ' + esc(c.type_piece) + tuteur + ' · ' + d + '</div>' +
-      actions + '</div>';
-  }).join("");
+  const { data, error } = await supabaseClient.from("profiles")
+    .select("id, nom_complet, certifie, plafond_fcfa").order("nom_complet").limit(100);
+  if (error) { box.innerHTML = '<div class="empty-history">Erreur : ' + esc(error.message) + '</div>'; return; }
+  if (!data || data.length === 0) { box.innerHTML = '<div class="empty-history">Aucun vendeur</div>'; return; }
+  box.innerHTML = data.map((u) =>
+    '<div class="admin-card"><div class="admin-card-title">' + esc(u.nom_complet || "Sans nom") + (u.certifie ? " ✅" : "") + '</div>' +
+    '<div class="pct-row"><div class="pct-field"><label>Plafond (FCFA)</label><input type="number" id="pl-' + u.id + '" value="' + (u.plafond_fcfa || 5000) + '"></div></div>' +
+    '<div class="admin-row"><button class="admin-btn-ok" onclick="saveVendeur(\'' + u.id + '\',' + (u.certifie ? "true" : "false") + ',false)">Enregistrer</button>' +
+    '<button class="admin-btn-no" onclick="saveVendeur(\'' + u.id + '\',' + (u.certifie ? "true" : "false") + ',true)">' + (u.certifie ? "Retirer certif." : "Certifier") + '</button></div></div>'
+  ).join("");
+}
+async function saveVendeur(id, certifie, toggle) {
+  const plafond = parseInt(document.getElementById("pl-" + id).value, 10) || 5000;
+  const { error } = await supabaseClient.from("profiles").update({ plafond_fcfa: plafond, certifie: toggle ? !certifie : certifie }).eq("id", id);
+  if (error) alert(error.message);
+  loadVendeurs();
 }
 
-async function setCandidature(id, statut) {
-  await supabaseClient.from("candidatures_affiliation").update({ statut }).eq("id", id);
-  loadCandidatures();
+// ---- Livraisons ----
+async function loadLivraisons() {
+  const box = document.getElementById("listLivraisons");
+  const { data, error } = await supabaseClient.from("corbeau_attributions")
+    .select("id, quantite, adresse_livraison, vendeur_id, produit_id, created_at, corbeau_produits(nom, stock_disponible)")
+    .eq("statut", "a_livrer").order("created_at");
+  if (error) { box.innerHTML = '<div class="empty-history">Erreur : ' + esc(error.message) + '</div>'; return; }
+  if (!data || data.length === 0) { box.innerHTML = '<div class="empty-history">Aucune livraison en attente</div>'; return; }
+  const ids = [...new Set(data.map((x) => x.vendeur_id))];
+  const noms = {};
+  ((await supabaseClient.from("profiles").select("id, nom_complet").in("id", ids)).data || []).forEach((r) => { noms[r.id] = r.nom_complet; });
+  box.innerHTML = data.map((x) =>
+    '<div class="admin-card"><div class="admin-card-title">' + esc(x.corbeau_produits ? x.corbeau_produits.nom : "Produit") + ' ×' + x.quantite + '</div>' +
+    '<div class="admin-card-meta">' + esc(noms[x.vendeur_id] || "Revendeur") + ' · ' + esc(x.adresse_livraison || "") + '</div>' +
+    '<div class="admin-row"><button class="admin-btn-ok" onclick="livrer(\'' + x.id + '\',\'' + x.produit_id + '\',' + x.quantite + ',' + (x.corbeau_produits ? x.corbeau_produits.stock_disponible : 0) + ')">Marquer livré</button></div></div>'
+  ).join("");
+}
+async function livrer(id, produitId, qte, stock) {
+  const r1 = await supabaseClient.from("corbeau_attributions").update({ statut: "livre" }).eq("id", id);
+  if (r1.error) { alert(r1.error.message); return; }
+  await supabaseClient.from("corbeau_produits").update({ stock_disponible: Math.max(0, stock - qte) }).eq("id", produitId);
+  loadLivraisons();
 }
 
 // ---- Produits Corbeau ----
@@ -91,8 +105,8 @@ async function loadProduits() {
     const d = new Date(p.created_at).toLocaleDateString("fr-FR");
     const actions = p.statut === "en_attente"
       ? '<div class="pct-row">' +
-        '<div class="pct-field"><label>% total retiré</label><input type="number" id="pct-' + p.id + '" value="' + p.commission_pct + '"></div>' +
-        '<div class="pct-field"><label>dont % app</label><input type="number" id="app-' + p.id + '" value="' + p.part_app_pct + '"></div>' +
+        '<div class="pct-field"><label>% total retiré</label><input type="number" id="pct-' + p.id + '" value="' + (p.commission_pct != null ? p.commission_pct : 30) + '"></div>' +
+        '<div class="pct-field"><label>dont % app</label><input type="number" id="app-' + p.id + '" value="' + (p.part_app_pct != null ? p.part_app_pct : 5) + '"></div>' +
         '</div>' +
         '<div class="admin-row"><button class="admin-btn-ok" onclick="setProduit(\'' + p.id + '\',\'approuve\')">Approuver</button>' +
         '<button class="admin-btn-no" onclick="setProduit(\'' + p.id + '\',\'refuse\')">Refuser</button></div>'
@@ -113,7 +127,8 @@ async function setProduit(id, statut) {
     updates.part_app_pct = parseFloat(appInput.value);
     updates.actif = true;
   }
-  await supabaseClient.from("corbeau_produits").update(updates).eq("id", id);
+  const { error } = await supabaseClient.from("corbeau_produits").update(updates).eq("id", id);
+  if (error) alert(error.message);
   loadProduits();
 }
 
@@ -157,23 +172,22 @@ async function loadVentesCorbeau() {
   const box = document.getElementById("listVentesCorbeau");
   const { data, error } = await supabaseClient
     .from("corbeau_ventes")
-    .select("id, quantite_vendue, montant_total_fcfa, montant_a_reverser_fcfa, montant_revendeur_fcfa, statut, created_at, profiles(nom_complet)")
-    .order("created_at", { ascending: false })
-    .limit(50);
-
-  if (error || !data || data.length === 0) {
-    box.innerHTML = '<div class="empty-history">Aucune déclaration de vente</div>';
-    return;
-  }
+    .select("id, vendeur_id, quantite_vendue, montant_total_fcfa, montant_a_reverser_fcfa, montant_revendeur_fcfa, statut, created_at")
+    .order("created_at", { ascending: false }).limit(50);
+  if (error) { box.innerHTML = '<div class="empty-history">Erreur : ' + esc(error.message) + '</div>'; return; }
+  if (!data || data.length === 0) { box.innerHTML = '<div class="empty-history">Aucune déclaration de vente</div>'; return; }
+  const ids = [...new Set(data.map((v) => v.vendeur_id))];
+  const noms = {};
+  ((await supabaseClient.from("profiles").select("id, nom_complet").in("id", ids)).data || []).forEach((r) => { noms[r.id] = r.nom_complet; });
 
   box.innerHTML = data.map((v) => {
     const d = new Date(v.created_at).toLocaleDateString("fr-FR");
-    const nom = v.profiles ? v.profiles.nom_complet : "Revendeur";
+    const nom = noms[v.vendeur_id] || "Revendeur";
     const actions = v.statut === "en_attente"
       ? '<div class="admin-row"><button class="admin-btn-ok" onclick="confirmVente(\'' + v.id + '\')">Dépôt reçu, confirmer</button></div>'
       : '<div class="status-banner en_attente" style="margin-top:8px">✅ Confirmé</div>';
     return '<div class="admin-card">' +
-      '<div class="admin-card-title">' + esc(nom || "Revendeur") + ' · ' + v.quantite_vendue + ' vendu(s)</div>' +
+      '<div class="admin-card-title">' + esc(nom) + ' · ' + v.quantite_vendue + ' vendu(s)</div>' +
       '<div class="admin-card-meta">Total vente : ' + Number(v.montant_total_fcfa).toLocaleString("fr-FR") + ' F · À reverser : ' + Number(v.montant_a_reverser_fcfa).toLocaleString("fr-FR") + ' F · Part revendeur : ' + Number(v.montant_revendeur_fcfa).toLocaleString("fr-FR") + ' F · ' + d + '</div>' +
       actions + '</div>';
   }).join("");
@@ -183,6 +197,31 @@ async function confirmVente(id) {
   const { error } = await supabaseClient.rpc("admin_confirm_vente", { p_id: id });
   if (error) { alert(error.message); return; }
   loadVentesCorbeau();
+}
+
+// ---- Retraits des fournisseurs ----
+async function loadRetraitsFour() {
+  const box = document.getElementById("listRetraitsFour");
+  const { data, error } = await supabaseClient.from("corbeau_retraits_fournisseurs")
+    .select("id, fournisseur_id, montant_fcfa, frais_fcfa, methode, numero, statut, created_at").order("created_at", { ascending: false }).limit(50);
+  if (error) { box.innerHTML = '<div class="empty-history">Erreur : ' + esc(error.message) + '</div>'; return; }
+  if (!data || data.length === 0) { box.innerHTML = '<div class="empty-history">Aucun retrait fournisseur</div>'; return; }
+  const ids = [...new Set(data.map((r) => r.fournisseur_id))];
+  const noms = {};
+  ((await supabaseClient.from("profiles").select("id, nom_complet").in("id", ids)).data || []).forEach((r) => { noms[r.id] = r.nom_complet; });
+  box.innerHTML = data.map((r) => {
+    const actions = r.statut === "en_attente"
+      ? '<div class="admin-row"><button class="admin-btn-ok" onclick="setRetraitFour(\'' + r.id + '\',\'complete\')">Marquer payé</button>' +
+        '<button class="admin-btn-no" onclick="setRetraitFour(\'' + r.id + '\',\'refuse\')">Refuser</button></div>'
+      : '<div class="status-banner ' + (r.statut === "complete" ? "en_attente" : "refuse") + '" style="margin-top:8px">' + (r.statut === "complete" ? "Payé" : "Refusé") + '</div>';
+    return '<div class="admin-card"><div class="admin-card-title">' + esc(noms[r.fournisseur_id] || "Fournisseur") + ' · ' + Number(r.montant_fcfa).toLocaleString("fr-FR") + ' F</div>' +
+      '<div class="admin-card-meta">' + esc(r.methode) + ' · ' + esc(r.numero) + ' · frais ' + Number(r.frais_fcfa).toLocaleString("fr-FR") + ' F · ' + new Date(r.created_at).toLocaleDateString("fr-FR") + '</div>' + actions + '</div>';
+  }).join("");
+}
+async function setRetraitFour(id, statut) {
+  const { error } = await supabaseClient.from("corbeau_retraits_fournisseurs").update({ statut }).eq("id", id);
+  if (error) alert(error.message);
+  loadRetraitsFour();
 }
 
 init();
