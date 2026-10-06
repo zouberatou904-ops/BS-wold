@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS WOLD CASH — Tableau de bord</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 60 60">
+        <rect x="2" y="2" width="56" height="56" rx="16" fill="#123330"/>
+        <path d="M18 40 L18 20 M18 20 L28 20 Q35 20 35 27 Q35 33 28 33 L20 33" stroke="#1FB6A8" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M38 40 L44 24 L50 40" stroke="#E8B95C" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="topbar-icons">
+      <div class="icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#9aa3a1" stroke-width="2"><path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg>
+      </div>
+      <div class="avatar" id="avatarInitial">?</div>
+    </div>
+  </div>
+
+  <div class="welcome-text">Bienvenue, <span id="welcomeName">...</span></div>
+
+  <div class="balance-card">
+    <div class="balance-label">Solde disponible</div>
+    <div class="balance-amount" id="balanceK">0,00<span class="unit">K</span></div>
+    <div class="balance-fcfa" id="balanceFcfa">≈ 0 FCFA</div>
+
+    <div class="balance-substats">
+      <div class="substat-card">
+        <div class="substat-icon">📈</div>
+        <div class="substat-label">Gains aujourd'hui</div>
+        <div class="substat-value" id="gainsJour">0,00 K</div>
+      </div>
+      <div class="substat-card">
+        <div class="substat-icon">🎁</div>
+        <div class="substat-label">Gains parrainage</div>
+        <div class="substat-value" id="gainsParrainage">0,00 K</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-row">
+    <div class="progress-title">Ma progression <span class="level-badge" id="levelBadge">Niveau 1</span></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+
+  <div class="section-title">Gagner de l'argent</div>
+
+  <div class="action-grid">
+    <div class="action-card teal" onclick="window.location.href='https://corbeau-os.vercel.app'">
+      <div class="action-icon">🔗</div>
+      <div>
+        <div class="action-label">Affiliation</div>
+        <div class="action-sub">Par vente confirmée</div>
+      </div>
+    </div>
+    <div class="action-card purple" onclick="window.location.href='parrainage.html'">
+      <div class="action-icon">👥</div>
+      <div>
+        <div class="action-label">Parrainage</div>
+        <div class="action-sub">Par filleul inscrit</div>
+      </div>
+    </div>
+    <div class="action-card gold" onclick="window.location.href='sondages.html'">
+      <div class="action-icon">📋</div>
+      <div>
+        <div class="action-label">Sondages</div>
+        <div class="action-sub" id="sondagesGain">0,00 K</div>
+      </div>
+    </div>
+    <div class="action-card gray" onclick="window.location.href='sondages.html'">
+      <div class="action-icon">✅</div>
+      <div>
+        <div class="action-label">Tâches</div>
+        <div class="action-sub" id="tachesGain">0,00 K</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-card full teal" onclick="window.location.href='retrait.html'">
+    <div class="action-icon">💸</div>
+    <div>
+      <div class="action-label">Retrait</div>
+      <div class="action-sub">Dès 0,3 K par Mobile Money</div>
+    </div>
+  </div>
+
+  <div class="action-card full gold" id="adminCard" style="display:none" onclick="window.location.href='admin.html'">
+    <div class="action-icon">⚙️</div>
+    <div>
+      <div class="action-label">Bureau admin</div>
+      <div class="action-sub">Vendeurs, produits, retraits, livraisons</div>
+    </div>
+  </div>
+
+  <button class="logout-btn" id="logoutBtn">Se déconnecter</button>
+
+  <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+      Accueil
+    </a>
+    <a href="sondages.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+      Gagner
+    </a>
+    <a href="parrainage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6"/><circle cx="17" cy="7" r="2.5"/><path d="M22 20c0-2.8-2-5-5-5.3"/></svg>
+      Parrainage
+    </a>
+    <a href="dashboard.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      Profil
+    </a>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="dashboard.js"></script>
+<script>
+(async function () {
+  try {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) return;
+    const { data } = await supabaseClient.from("profiles")
+      .select("est_admin").eq("id", session.user.id).maybeSingle();
+    if (data && data.est_admin === true) {
+      document.getElementById("adminCard").style.display = "";
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
