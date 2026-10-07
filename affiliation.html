@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS WOLD CASH — Affiliation</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .aff-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 18px; margin-top: 16px; }
+  .aff-card h2 { margin: 0 0 6px; font-size: 18px; }
+  .aff-card p { margin: 0 0 12px; font-size: 14px; opacity: .8; line-height: 1.45; }
+  .aff-field { margin-bottom: 12px; }
+  .aff-field label { display: block; font-size: 13px; opacity: .8; margin-bottom: 5px; }
+  .aff-field input[type=text], .aff-field input[type=tel], .aff-field textarea {
+    width: 100%; box-sizing: border-box; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.35); color: inherit; font: inherit; }
+  .aff-field input[type=file] { width: 100%; font-size: 13px; }
+  .aff-btn { display: block; width: 100%; box-sizing: border-box; padding: 14px; border: 0; border-radius: 14px;
+    background: var(--teal, #1fb6a8); color: #06201d; font-weight: 700; font-size: 15px; text-align: center; text-decoration: none; cursor: pointer; margin-top: 8px; }
+  .aff-btn.wa { background: #25d366; color: #062a14; }
+  .aff-btn.ghost { background: transparent; color: inherit; border: 1px solid rgba(255,255,255,.2); }
+  .aff-btn:disabled { opacity: .6; }
+  .aff-err { color: #ff8a8a; font-size: 13px; margin-top: 8px; min-height: 16px; }
+  .aff-back { display: inline-block; margin-top: 14px; font-size: 14px; opacity: .8; text-decoration: none; color: inherit; }
+  .aff-big { font-size: 42px; text-align: center; margin: 4px 0 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a class="aff-back" href="dashboard.html">← Retour</a>
+  <div class="hero-wordmark" style="text-align:left;margin-top:6px">BS <span>WOLD</span> AFFILIATION</div>
+  <div id="content"><div class="empty-history">Chargement...</div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="affiliation.js"></script>
+</body>
+</html>
