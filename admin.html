@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS WOLD CASH — Administration</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="hero-wordmark" style="text-align:left;margin-top:14px">BS <span>WOLD</span> ADMIN</div>
+
+  <div id="gate"><div class="empty-history">Vérification...</div></div>
+
+  <div id="adminApp" style="display:none">
+    <div class="admin-tabs">
+      <div class="admin-tab active" data-tab="affil" id="tabAffil">Candidatures</div>
+      <div class="admin-tab" data-tab="activ" id="tabActiv">Activation</div>
+      <div class="admin-tab" data-tab="retraits">Retraits</div>
+      <div class="admin-tab" data-tab="credit">Créditer</div>
+    </div>
+
+    <div class="admin-panel visible" id="panel-affil">
+      <div id="listAffil"><div class="empty-history">Chargement...</div></div>
+    </div>
+
+    <div class="admin-panel" id="panel-activ">
+      <div style="font-size:13px;opacity:.8;line-height:1.5;margin-bottom:10px">Quand quelqu'un a vraiment travaillé dans Corbeau, active son compte ici. Son parrain reçoit 0,4 K. Aucun argent n'est ajouté au filleul.</div>
+      <input type="text" id="searchActiv" oninput="renderActiv()" placeholder="Nom, WhatsApp ou téléphone..."
+        style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.35);color:inherit;font:inherit;margin-bottom:12px">
+      <div id="listActiv"><div class="empty-history">Chargement...</div></div>
+    </div>
+
+    <div class="admin-panel" id="panel-retraits">
+      <div id="listRetraits"><div class="empty-history">Chargement...</div></div>
+    </div>
+
+    <div class="admin-panel" id="panel-credit">
+      <input type="text" id="searchCredit" oninput="renderCredit()" placeholder="Rechercher un nom..."
+        style="width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.35);color:inherit;font:inherit;margin-bottom:12px">
+      <div id="listCredit"><div class="empty-history">Chargement...</div></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
